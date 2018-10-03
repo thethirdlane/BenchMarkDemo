@@ -1,0 +1,2 @@
+JMH S 21 org.ttl.BookBenchmark S 50 org.ttl.generated.BookBenchmark_testOldWay_jmhTest S 10 testOldWay S 11 AverageTime E A 1 1 1 E I 1 5 T 3 1 s E I 2 10 T 3 1 s E E E E E E E E U 12 MILLISECONDS E E 
+JMH S 21 org.ttl.BookBenchmark S 53 org.ttl.generated.BookBenchmark_testStreamWay_jmhTest S 13 testStreamWay S 11 AverageTime E A 1 1 1 E I 1 5 T 3 1 s E I 2 10 T 3 1 s E E E E E E E E U 12 MILLISECONDS E E 

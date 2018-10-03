@@ -1,0 +1,10 @@
+META-INF/CompilerHints
+org/ttl/generated/BookBenchmark_jmhType_B3.class
+org/ttl/generated/BookBenchmark_jmhType.class
+META-INF/BenchmarkList
+org/ttl/BookBenchmark.class
+ttl/examples/book/BookApp.class
+org/ttl/generated/BookBenchmark_testOldWay_jmhTest.class
+org/ttl/generated/BookBenchmark_testStreamWay_jmhTest.class
+org/ttl/generated/BookBenchmark_jmhType_B1.class
+org/ttl/generated/BookBenchmark_jmhType_B2.class
