@@ -14,7 +14,12 @@ public class BookApp {
 
 	public static void main(String[] args) throws IOException {
 		// countWordsTheOldWay("PrideAndPrejudice.txt");
-		countWords("PrideAndPrejudice.txt");
+		Map<String, Long> cw = countWords("PrideAndPrejudice.txt");
+		cw.forEach(BookApp::printEntry);
+	}
+
+	private static <K, V> void printEntry(K key, V value) {
+		System.out.println(key + " = " + value);
 	}
 
 	public static Map<String, Long> countWordsTheOldWay(String fileName) throws IOException {
@@ -29,12 +34,11 @@ public class BookApp {
 				String[] words = line.split("\\W");
 
 				for (String word : words) {
-					Long count = result.get(word);
-					if (count == null) {
-						count = new Long(0);
+					if (!word.matches("\\s*")) {
+						long count = result.computeIfAbsent(word, (s -> 0L));
+						count++;
+						result.put(word, count);
 					}
-					count++;
-					result.put(word, count);
 				}
 			}
 			return result;
@@ -46,6 +50,7 @@ public class BookApp {
 
 	public static Map<String, Long> countWords(String fileName) throws IOException {
 		Map<String, Long> result = Files.lines(Paths.get(fileName)).flatMap(s -> Arrays.stream(s.split("\\W")))
+				.filter(s -> !s.matches("\\s*"))
 				.collect(Collectors.groupingBy(s -> s, TreeMap::new, Collectors.counting()));
 
 		return result;

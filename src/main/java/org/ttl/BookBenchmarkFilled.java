@@ -31,30 +31,17 @@
 
 package org.ttl;
 
-import java.io.IOException;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
-
-import org.openjdk.jmh.annotations.Benchmark;
-import org.openjdk.jmh.annotations.BenchmarkMode;
-import org.openjdk.jmh.annotations.Level;
-import org.openjdk.jmh.annotations.Measurement;
-import org.openjdk.jmh.annotations.Mode;
-import org.openjdk.jmh.annotations.OutputTimeUnit;
-import org.openjdk.jmh.annotations.Scope;
-import org.openjdk.jmh.annotations.Setup;
-import org.openjdk.jmh.annotations.State;
-import org.openjdk.jmh.annotations.TearDown;
-import org.openjdk.jmh.annotations.Warmup;
+import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
+import ttl.examples.book.BookAppFilled;
 
-import ttl.examples.book.BookApp;
-
-
+import java.io.IOException;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 
 @BenchmarkMode(Mode.AverageTime)
@@ -63,7 +50,7 @@ import ttl.examples.book.BookApp;
 @Warmup(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)
 @Measurement(iterations = 10, time = 1, timeUnit = TimeUnit.SECONDS)
 @State(Scope.Thread)
-public class BookBenchmark {
+public class BookBenchmarkFilled {
 
 	@Setup(Level.Trial)
 	public void setup() {
@@ -77,22 +64,65 @@ public class BookBenchmark {
 
 	@Benchmark
 	public void testOldWay(Blackhole sink) throws IOException {
-		Map<String, Long> result = BookApp.countWordsTheOldWay("PrideAndPrejudice.txt");
+		Map<String, Long> result = BookAppFilled.countWordsTheOldWay("PrideAndPrejudice.txt");
+
+		sink.consume(result);
+	}
+
+	@Benchmark
+	public void testOldWayWithMatcher(Blackhole sink) throws IOException {
+		Map<String, Long> result = BookAppFilled.countWordsTheOldWayWithMatcher("PrideAndPrejudice.txt");
 
 		sink.consume(result);
 	}
 
 	@Benchmark
 	public void testStreamWay(Blackhole sink) throws IOException {
-		Map<String, Long> result = BookApp.countWords("PrideAndPrejudice.txt");
+		Map<String, Long> result = BookAppFilled.countWordsStream("PrideAndPrejudice.txt");
 
 		sink.consume(result);
+	}
+
+	@Benchmark
+	public void testStreamWayWithMatcher(Blackhole sink) throws IOException {
+		Map<String, Long> result = BookAppFilled.countWordsStreamMatcher("PrideAndPrejudice.txt");
+
+		sink.consume(result);
+	}
+
+	@Benchmark
+	public void testStreamWayWithCustomMatcher(Blackhole sink) throws IOException {
+		Map<String, Long> result = BookAppFilled.countWordsStreamCustomMatcher("PrideAndPrejudice.txt");
+
+		sink.consume(result);
+	}
+
+	@Benchmark
+	public void testStreamWayWithMatcherJdk9(Blackhole sink) throws IOException {
+		Map<String, Long> result = BookAppFilled.countWordsStreamMatcherJdk9("PrideAndPrejudice.txt");
+
+		sink.consume(result);
+	}
+
+	@Benchmark
+	public void testParalelStreamWay(Blackhole sink) throws IOException {
+		Map<String, Long> result = BookAppFilled.countWordsParallel("PrideAndPrejudice.txt");
+
+		sink.consume(result);
+	}
+
+	@Benchmark
+	public Map<String, Long> testParalelStreamConcurrentWay(Blackhole sink) throws IOException {
+		Map<String, Long> result = BookAppFilled.countWordsParallelConcurrent("PrideAndPrejudice.txt");
+
+		//sink.consume(result);
+		return result;
 	}
 
 	public static void main(String[] args) throws RunnerException {
 		
 		Options opt = new OptionsBuilder()
-				.include(BookBenchmark.class.getSimpleName())
+				.include(BookBenchmarkFilled.class.getSimpleName())
 				.forks(1)
 				//.jvmArgs("-Xms3048m", "-Xmx3048m")
 				//.jvmArgs("-XX:+PrintCompilation", "-verbose:gc")
