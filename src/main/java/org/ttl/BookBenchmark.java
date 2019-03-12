@@ -60,8 +60,8 @@ import ttl.examples.book.BookApp;
 @BenchmarkMode(Mode.AverageTime)
 //@BenchmarkMode(Mode.SingleShotTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
-@Warmup(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)
-@Measurement(iterations = 10, time = 1, timeUnit = TimeUnit.SECONDS)
+@Warmup(iterations = 3, time = 1, timeUnit = TimeUnit.SECONDS)
+@Measurement(iterations = 2, time = 1, timeUnit = TimeUnit.SECONDS)
 @State(Scope.Thread)
 public class BookBenchmark {
 
@@ -92,6 +92,8 @@ public class BookBenchmark {
 	public static void main(String[] args) throws RunnerException {
 		
 		Options opt = new OptionsBuilder()
+				
+				.exclude(BookBenchmarkFilled.class.getSimpleName())
 				.include(BookBenchmark.class.getSimpleName())
 				.forks(1)
 				//.jvmArgs("-Xms3048m", "-Xmx3048m")

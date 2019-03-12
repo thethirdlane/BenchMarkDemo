@@ -1,0 +1,33 @@
+**/target/
+**/bin/
+**/build/
+!.mvn/wrapper/maven-wrapper.jar
+
+### STS ###
+.apt_generated
+**/.classpath
+**/.factorypath
+**/.project
+**/.settings
+**/.springBeans
+**/.sts4-cache
+**/.metadata
+
+### IntelliJ IDEA ###
+**/.idea
+**/*.iws
+**/*.iml
+**/*.ipr
+
+### NetBeans ###
+**/nbproject
+**/nbbuild/
+**/dist/
+**/nbdist/
+**/.nb-gradle/
+**/build/
+
+**/LarkUDB/
+**/derby.log
+
+**/.attach_*

@@ -90,9 +90,6 @@ public class BookAppFilled {
         }
     }
 
-    // result.forEach((key, value) -> System.out.println("Word: " + key + ",
-    // Count:" + value));
-
     public static Map<String, Long> countWordsStream(String fileName) throws IOException {
         Map<String, Long> result = Files.lines(Paths.get(fileName))
                 .flatMap(s -> Arrays.stream(s.split("\\W")))
@@ -100,8 +97,6 @@ public class BookAppFilled {
                 .collect(Collectors.groupingBy(s -> s, TreeMap::new, Collectors.counting()));
 
         return result;
-        // result.forEach((key, value) -> System.out.println("Word: " + key + ",
-        // Count:" + value));
     }
 
     public static Map<String, Long> countWordsStreamMatcher(String fileName) throws IOException {
@@ -161,9 +156,6 @@ public class BookAppFilled {
                 .collect(Collectors.groupingBy(s -> s, TreeMap::new, Collectors.counting()));
 
         return result;
-        // return new TreeMap<String, Long>(result);
-        // result.forEach((key, value) -> System.out.println("Word: " + key + ",
-        // Count:" + value));
     }
 
     public static Map<String, Long> countWordsParallelConcurrent(String fileName) throws IOException {
@@ -172,10 +164,5 @@ public class BookAppFilled {
                 .collect(Collectors.groupingByConcurrent(s -> s, ConcurrentHashMap::new, Collectors.counting()));
 
         return result;
-        // return new TreeMap<String, Long>(result);
-        // result.forEach((key, value) -> System.out.println("Word: " + key + ",
-        // Count:" + value));
     }
-
-
 }
